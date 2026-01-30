@@ -1,0 +1,619 @@
+# Russian translations for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-01-29 21:31+1000\n"
+"PO-Revision-Date: 2026-01-29 20:46+1000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ru\n"
+"Language-Team: ru <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: app.py:823 app.py:971
+#, fuzzy
+msgid "Password must be at least 6 characters long"
+msgstr "Не менее 6 символов"
+
+#: app.py:827
+msgid "Passwords do not match"
+msgstr "Пароли не совпадают"
+
+#: app.py:831
+#, fuzzy
+msgid "Username already exists"
+msgstr "Имя пользователя или Email"
+
+#: app.py:835
+msgid "Email already registered"
+msgstr "Электронная почта уже зарегистрирована"
+
+#: app.py:846
+msgid "Registration successful!"
+msgstr "Регистрация прошла успешно!"
+
+#: app.py:865
+msgid "Invalid credentials"
+msgstr "Неверные учетные данные"
+
+#: app.py:940
+#, fuzzy
+msgid "Display name updated"
+msgstr "Отображаемое имя"
+
+#: app.py:946
+#, fuzzy
+msgid "Username already taken"
+msgstr "Имя пользователя или Email"
+
+#: app.py:954
+#, fuzzy, python-brace-format
+msgid ""
+"Username can only be changed once per week. Please wait {days_remaining} "
+"more day(s)."
+msgstr "Имя пользователя можно изменить только раз в неделю"
+
+#: app.py:959
+msgid "Username updated successfully!"
+msgstr "Имя пользователя успешно обновлено!"
+
+#: app.py:967
+#, fuzzy
+msgid "Current password is incorrect"
+msgstr "Текущий пароль"
+
+#: app.py:969
+#, fuzzy
+msgid "New passwords do not match"
+msgstr "Новый пароль"
+
+#: app.py:975
+#, fuzzy
+msgid "Password updated"
+msgstr "Пароль"
+
+#: app.py:985
+msgid "Avatar updated successfully!"
+msgstr "Аватар успешно обновлен!"
+
+#: app.py:987
+msgid "Invalid image file. Please upload a valid image (PNG, JPG, GIF, WEBP)."
+msgstr "Неверный файл изображения. Пожалуйста, загрузите допустимое изображение (PNG, JPG, GIF, WEBP)."
+
+#: app.py:989
+msgid "No file selected"
+msgstr "Файл не выбран"
+
+#: app.py:1006
+msgid "Language changed successfully!"
+msgstr "Язык успешно изменен!"
+
+#: app.py:1008
+#, fuzzy
+msgid "Invalid language selection."
+msgstr "Языковые настройки"
+
+#: templates/base.html:6 templates/base.html:362 templates/base.html:432
+msgid "FreshCoin"
+msgstr "FreshCoin"
+
+#: templates/base.html:370
+msgid "Home"
+msgstr "Главная"
+
+#: templates/base.html:373
+msgid "Currencies"
+msgstr "Валюты"
+
+#: templates/base.html:376
+msgid "History"
+msgstr "История"
+
+#: templates/base.html:379
+msgid "Settings"
+msgstr "Настройки"
+
+#: templates/base.html:382
+msgid "Logout"
+msgstr "Выход"
+
+#: templates/base.html:386 templates/login.html:24
+msgid "Login"
+msgstr "Вход"
+
+#: templates/base.html:389 templates/register.html:35
+msgid "Register"
+msgstr "Регистрация"
+
+#: templates/base.html:432
+msgid "All rights reserved."
+msgstr "Все права защищены."
+
+#: templates/currencies.html:3
+msgid "Currencies - FreshCoin"
+msgstr "Валюты - FreshCoin"
+
+#: templates/currencies.html:9
+msgid "Available Currencies"
+msgstr "Доступные валюты"
+
+#: templates/currencies.html:19
+msgid "Name"
+msgstr "Имя"
+
+#: templates/currencies.html:20 templates/currencies.html:73
+#: templates/index.html:143
+msgid "Symbol"
+msgstr "Символ"
+
+#: templates/currencies.html:21
+msgid "Creator"
+msgstr "Создатель"
+
+#: templates/currencies.html:22
+msgid "Price (FC)"
+msgstr "Цена (FC)"
+
+#: templates/currencies.html:23
+msgid "Liquidity"
+msgstr "Ликвидность"
+
+#: templates/currencies.html:24
+msgid "24h Change"
+msgstr "Изменение за 24ч"
+
+#: templates/currencies.html:25
+msgid "Commission"
+msgstr "Комиссия"
+
+#: templates/currencies.html:26 templates/currencies.html:76
+msgid "Actions"
+msgstr "Действия"
+
+#: templates/currencies.html:31 templates/currencies.html:81
+msgid "FreshCoin"
+msgstr "FreshCoin"
+
+#: templates/currencies.html:33
+msgid "System"
+msgstr "Система"
+
+#: templates/currencies.html:50 templates/currencies.html:94
+msgid "Buy"
+msgstr "Купить"
+
+#: templates/currencies.html:51 templates/currencies.html:95
+msgid "Sell"
+msgstr "Продать"
+
+#: templates/currencies.html:65
+msgid "My Wallets"
+msgstr "Мои кошельки"
+
+#: templates/currencies.html:72 templates/currencies.html:119
+#: templates/currencies.html:169 templates/index.html:70
+msgid "Currency"
+msgstr "Валюта"
+
+#: templates/currencies.html:74
+msgid "Balance"
+msgstr "Баланс"
+
+#: templates/currencies.html:75
+msgid "Value (FC)"
+msgstr "Значение (FC)"
+
+#: templates/currencies.html:113 templates/currencies.html:152
+msgid "Buy Currency"
+msgstr "Купить валюту"
+
+#: templates/currencies.html:123
+msgid "Amount in FC"
+msgstr "Количество в FC"
+
+#: templates/currencies.html:125
+msgid "Enter amount in FC"
+msgstr "Введите количество в FC"
+
+#: templates/currencies.html:126 templates/currencies.html:176
+msgid "MAX"
+msgstr "МАКС"
+
+#: templates/currencies.html:129
+msgid "Available FC:"
+msgstr "Доступно FC:"
+
+#: templates/currencies.html:135 templates/currencies.html:185
+msgid "Price"
+msgstr "Цена"
+
+#: templates/currencies.html:139 templates/currencies.html:189
+msgid "Price Impact"
+msgstr "Влияние цены"
+
+#: templates/currencies.html:145 templates/currencies.html:195
+msgid "You Will Receive"
+msgstr "Вы получите"
+
+#: templates/currencies.html:151 templates/currencies.html:201
+msgid "Cancel"
+msgstr "Отмена"
+
+#: templates/currencies.html:163 templates/currencies.html:202
+msgid "Sell Currency"
+msgstr "Продать валюту"
+
+#: templates/currencies.html:173
+msgid "Amount to Sell"
+msgstr "Количество для продажи"
+
+#: templates/currencies.html:175
+msgid "Enter amount to sell"
+msgstr "Введите количество для продажи"
+
+#: templates/currencies.html:179
+msgid "Available:"
+msgstr "Доступно:"
+
+#: templates/history.html:3
+msgid "Transaction History - FreshCoin"
+msgstr "История транзакций - FreshCoin"
+
+#: templates/history.html:9
+msgid "Transaction History"
+msgstr "История транзакций"
+
+#: templates/history.html:15
+msgid "Exchange History"
+msgstr "История обменов"
+
+#: templates/history.html:23 templates/history.html:72
+msgid "Date"
+msgstr "Дата"
+
+#: templates/history.html:24 templates/history.html:73
+msgid "Type"
+msgstr "Тип"
+
+#: templates/history.html:25 templates/index.html:98
+msgid "From"
+msgstr "От"
+
+#: templates/history.html:26 templates/index.html:105
+msgid "To"
+msgstr "Кому"
+
+#: templates/history.html:27 templates/history.html:74 templates/index.html:77
+#: templates/index.html:112
+msgid "Amount"
+msgstr "Количество"
+
+#: templates/history.html:36
+msgid "BUY"
+msgstr "ПОКУПКА"
+
+#: templates/history.html:38
+msgid "SELL"
+msgstr "ПРОДАЖА"
+
+#: templates/history.html:40
+msgid "SWAP"
+msgstr "ОБМЕН"
+
+#: templates/history.html:54
+msgid "No exchange transactions yet."
+msgstr "Обменных транзакций пока нет."
+
+#: templates/history.html:64
+msgid "All Transactions"
+msgstr "Все транзакции"
+
+#: templates/history.html:75
+msgid "Description"
+msgstr "Описание"
+
+#: templates/history.html:84
+msgid "CREDIT"
+msgstr "КРЕДИТ"
+
+#: templates/history.html:86
+msgid "DEBIT"
+msgstr "ДЕБЕТ"
+
+#: templates/history.html:99
+msgid "No transactions yet."
+msgstr "Транзакций пока нет."
+
+#: templates/index.html:3
+msgid "Dashboard - FreshCoin"
+msgstr "Панель управления - FreshCoin"
+
+#: templates/index.html:15 templates/settings.html:21
+msgid "Avatar"
+msgstr "Аватар"
+
+#: templates/index.html:19
+msgid "Your Balance"
+msgstr "Ваш баланс"
+
+#: templates/index.html:33
+msgid "Earn FreshCoins"
+msgstr "Заработайте FreshCoins"
+
+#: templates/index.html:38
+msgid "You can earn between"
+msgstr "Вы можете заработать от"
+
+#: templates/index.html:38
+msgid "and"
+msgstr "до"
+
+#: templates/index.html:38
+msgid "per ad watched!"
+msgstr "за просмотр рекламы!"
+
+#: templates/index.html:39
+msgid "Daily limit:"
+msgstr "Дневной лимит:"
+
+#: templates/index.html:39
+msgid "ads remaining"
+msgstr "реклам осталось"
+
+#: templates/index.html:43
+msgid "Watch Ad & Earn FC"
+msgstr "Смотреть рекламу и зарабатывать FC"
+
+#: templates/index.html:48
+msgid "Daily Limit Reached"
+msgstr "Достигнут дневной лимит"
+
+#: templates/index.html:49
+msgid "You've watched 100 ads today. Come back tomorrow to earn more FC!"
+msgstr ""
+"Вы посмотрели 100 реклам сегодня. Приходите завтра, чтобы заработать "
+"больше FC!"
+
+#: templates/index.html:60
+msgid "Send Currency"
+msgstr "Отправить валюту"
+
+#: templates/index.html:65
+msgid "Recipient (Username or ID)"
+msgstr "Получатель (Имя пользователя или ID)"
+
+#: templates/index.html:66
+msgid "Enter username or ID"
+msgstr "Введите имя пользователя или ID"
+
+#: templates/index.html:72 templates/index.html:100 templates/index.html:107
+msgid "FreshCoin (FC)"
+msgstr "FreshCoin (FC)"
+
+#: templates/index.html:81
+msgid "Send"
+msgstr "Отправить"
+
+#: templates/index.html:92
+msgid "Currency Exchange"
+msgstr "Обмен валюты"
+
+#: templates/index.html:116
+msgid "Exchange"
+msgstr "Обменять"
+
+#: templates/index.html:133
+msgid "Create New Currency"
+msgstr "Создать новую валюту"
+
+#: templates/index.html:139
+msgid "Currency Name"
+msgstr "Название валюты"
+
+#: templates/index.html:140
+msgid "e.g., MyCoin"
+msgstr "например, MyCoin"
+
+#: templates/index.html:144
+msgid "e.g., MC"
+msgstr "например, MC"
+
+#: templates/index.html:147
+#, fuzzy
+msgid "Commission Rate"
+msgstr "Процент комиссии (%)"
+
+#: templates/index.html:151
+msgid "Create"
+msgstr "Создать"
+
+#: templates/index.html:154
+#, fuzzy
+msgid ""
+"Creating a currency costs 1000 FC. Commission rate must be between 0.5 "
+"percent and 25 percent."
+msgstr ""
+"Создание валюты стоит 1000 FC. Процент комиссии должен быть между 0.5% и "
+"25%."
+
+#: templates/index.html:168
+msgid "Search Currencies"
+msgstr "Поиск валют"
+
+#: templates/index.html:173
+msgid "Search currencies..."
+msgstr "Поиск валют..."
+
+#: templates/login.html:3
+msgid "Login - FreshCoin"
+msgstr "Вход - FreshCoin"
+
+#: templates/login.html:11
+msgid "Welcome Back"
+msgstr "С возвращением"
+
+#: templates/login.html:16
+msgid "Username or Email"
+msgstr "Имя пользователя или Email"
+
+#: templates/login.html:20 templates/register.html:26
+msgid "Password"
+msgstr "Пароль"
+
+#: templates/login.html:28
+msgid "Don't have an account?"
+msgstr "Нет аккаунта?"
+
+#: templates/login.html:28
+msgid "Register here"
+msgstr "Зарегистрируйтесь здесь"
+
+#: templates/register.html:3
+msgid "Register - FreshCoin"
+msgstr "Регистрация - FreshCoin"
+
+#: templates/register.html:11
+msgid "Create Account"
+msgstr "Создать аккаунт"
+
+#: templates/register.html:16
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: templates/register.html:18
+msgid "Choose a unique username"
+msgstr "Выберите уникальное имя пользователя"
+
+#: templates/register.html:21
+msgid "Email"
+msgstr "Email"
+
+#: templates/register.html:23
+msgid "We'll never share your email"
+msgstr "Мы никогда не передадим ваш email"
+
+#: templates/register.html:28
+msgid "At least 6 characters"
+msgstr "Не менее 6 символов"
+
+#: templates/register.html:31
+msgid "Confirm Password"
+msgstr "Подтвердите пароль"
+
+#: templates/register.html:39
+msgid "Already have an account?"
+msgstr "Уже есть аккаунт?"
+
+#: templates/register.html:39
+msgid "Login here"
+msgstr "Войти здесь"
+
+#: templates/settings.html:3
+msgid "Settings - FreshCoin"
+msgstr "Настройки - FreshCoin"
+
+#: templates/settings.html:9
+msgid "Account Settings"
+msgstr "Настройки аккаунта"
+
+#: templates/settings.html:15
+msgid "Profile Information"
+msgstr "Информация профиля"
+
+#: templates/settings.html:22
+msgid "Current Avatar"
+msgstr "Текущий аватар"
+
+#: templates/settings.html:26
+msgid "User ID"
+msgstr "ID пользователя"
+
+#: templates/settings.html:33
+msgid "Share this ID with others to receive transfers"
+msgstr "Поделитесь этим ID с другими, чтобы получать переводы"
+
+#: templates/settings.html:39
+msgid "Display Name"
+msgstr "Отображаемое имя"
+
+#: templates/settings.html:42
+msgid "Leave blank to remove display name"
+msgstr "Оставьте пустым, чтобы удалить отображаемое имя"
+
+#: templates/settings.html:45
+msgid "Update Display Name"
+msgstr "Обновить отображаемое имя"
+
+#: templates/settings.html:54
+msgid "Change Username"
+msgstr "Изменить имя пользователя"
+
+#: templates/settings.html:57
+msgid "Username can only be changed once per week"
+msgstr "Имя пользователя можно изменить только раз в неделю"
+
+#: templates/settings.html:60
+msgid "Update Username"
+msgstr "Обновить имя пользователя"
+
+#: templates/settings.html:72
+msgid "Change Avatar"
+msgstr "Изменить аватар"
+
+#: templates/settings.html:78
+msgid "Upload New Avatar"
+msgstr "Загрузить новый аватар"
+
+#: templates/settings.html:80
+msgid "Supports: PNG, JPG, GIF, WEBP (will be resized to 128x128)"
+msgstr "Поддерживается: PNG, JPG, GIF, WEBP (будет изменен размер до 128x128)"
+
+#: templates/settings.html:83
+msgid "Upload Avatar"
+msgstr "Загрузить аватар"
+
+#: templates/settings.html:91 templates/settings.html:109
+msgid "Change Password"
+msgstr "Изменить пароль"
+
+#: templates/settings.html:97
+msgid "Current Password"
+msgstr "Текущий пароль"
+
+#: templates/settings.html:101
+msgid "New Password"
+msgstr "Новый пароль"
+
+#: templates/settings.html:105
+msgid "Confirm New Password"
+msgstr "Подтвердите новый пароль"
+
+#: templates/settings.html:121
+msgid "Language Settings"
+msgstr "Языковые настройки"
+
+#: templates/settings.html:126
+msgid "Select Language"
+msgstr "Выберите язык"
+
+#: templates/settings.html:128
+msgid "English"
+msgstr "Английский"
+
+#: templates/settings.html:129
+msgid "Russian"
+msgstr "Русский"
+
+#: templates/settings.html:133
+msgid "Change Language"
+msgstr "Изменить язык"
+

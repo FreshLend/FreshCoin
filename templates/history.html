@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Transaction History - FreshCoin') }}{% endblock %}
+
+{% block content %}
+<div class="history-container">
+    <div class="row g-4">
+        <div class="col-12">
+            <h2 class="section-title mb-4"><i class="fas fa-history me-2 glow"></i>{{ _('Transaction History') }}</h2>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0"><i class="fas fa-exchange-alt me-2 glow"></i>{{ _('Exchange History') }}</h4>
+                </div>
+                <div class="card-body">
+                    {% if exchange_transactions %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>{{ _('Date') }}</th>
+                                    <th>{{ _('Type') }}</th>
+                                    <th>{{ _('From') }}</th>
+                                    <th>{{ _('To') }}</th>
+                                    <th>{{ _('Amount') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for tx in exchange_transactions %}
+                                <tr>
+                                    <td>{{ tx.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                                    <td>
+                                        {% if tx.from_currency == 'FC' %}
+                                            <span class="badge bg-success">{{ _('BUY') }}</span>
+                                        {% elif tx.to_currency == 'FC' %}
+                                            <span class="badge bg-warning">{{ _('SELL') }}</span>
+                                        {% else %}
+                                            <span class="badge bg-info">{{ _('SWAP') }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ tx.from_amount|round(4) }} {{ tx.from_currency }}</td>
+                                    <td>{{ tx.to_amount|round(4) }} {{ tx.to_currency }}</td>
+                                    <td>{{ tx.to_amount|round(4) }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-exchange-alt fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">{{ _('No exchange transactions yet.') }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0"><i class="fas fa-list me-2 glow"></i>{{ _('All Transactions') }}</h4>
+                </div>
+                <div class="card-body">
+                    {% if transactions %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>{{ _('Date') }}</th>
+                                    <th>{{ _('Type') }}</th>
+                                    <th>{{ _('Amount') }}</th>
+                                    <th>{{ _('Description') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for tx in transactions %}
+                                <tr>
+                                    <td>{{ tx.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                                    <td>
+                                        {% if tx.transaction_type == 'credit' %}
+                                            <span class="badge bg-success">{{ _('CREDIT') }}</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">{{ _('DEBIT') }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ "%.2f"|format(tx.amount) }} FC</td>
+                                    <td>{{ tx.description }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-list fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">{{ _('No transactions yet.') }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.card');
+    cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, 150 * index);
+    });
+});
+</script>
+{% endblock %}

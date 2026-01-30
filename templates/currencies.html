@@ -1,0 +1,515 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Currencies - FreshCoin') }}{% endblock %}
+
+{% block content %}
+<div class="currencies-container">
+    <div class="row g-4">
+        <div class="col-12">
+            <h2 class="section-title mb-4"><i class="fas fa-coins me-2 glow"></i>{{ _('Available Currencies') }}</h2>
+        </div>
+        
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>{{ _('Name') }}</th>
+                                    <th>{{ _('Symbol') }}</th>
+                                    <th>{{ _('Creator') }}</th>
+                                    <th>{{ _('Price (FC)') }}</th>
+                                    <th>{{ _('Liquidity') }}</th>
+                                    <th>{{ _('24h Change') }}</th>
+                                    <th>{{ _('Commission') }}</th>
+                                    <th>{{ _('Actions') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{ _('FreshCoin') }}</td>
+                                    <td>FC</td>
+                                    <td>{{ _('System') }}</td>
+                                    <td>1.0000</td>
+                                    <td>∞</td>
+                                    <td>0%</td>
+                                    <td>5.00%</td>
+                                    <td>-</td>
+                                </tr>
+                                {% for currency in currencies %}
+                                <tr>
+                                    <td>{{ currency.name }}</td>
+                                    <td>{{ currency.symbol }}</td>
+                                    <td>{{ currency.creator.username }}</td>
+                                    <td>{{ "%.8f"|format(currency.current_price) }}</td>
+                                    <td>{{ "%.2f"|format(currency.liquidity) }} FC</td>
+                                    <td><span class="text-success">+0%</span></td>
+                                    <td>{{ "%.2f"|format(currency.commission_rate * 100) }}%</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary me-1" onclick="buyCurrency('{{ currency.symbol }}')">{{ _('Buy') }}</button>
+                                        <button class="btn btn-sm btn-outline-warning" onclick="prepareSell('{{ currency.symbol }}')">{{ _('Sell') }}</button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0"><i class="fas fa-wallet me-2 glow"></i>{{ _('My Wallets') }}</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>{{ _('Currency') }}</th>
+                                    <th>{{ _('Symbol') }}</th>
+                                    <th>{{ _('Balance') }}</th>
+                                    <th>{{ _('Value (FC)') }}</th>
+                                    <th>{{ _('Actions') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{ _('FreshCoin') }}</td>
+                                    <td>FC</td>
+                                    <td>{{ "%.2f"|format(user.balance) }}</td>
+                                    <td>{{ "%.2f"|format(user.balance) }}</td>
+                                    <td>-</td>
+                                </tr>
+                                {% for wallet in wallets %}
+                                <tr>
+                                    <td>{{ wallet.currency.name }}</td>
+                                    <td>{{ wallet.currency.symbol }}</td>
+                                    <td>{{ "%.4f"|format(wallet.balance) }}</td>
+                                    <td>{{ "%.2f"|format(wallet.balance * wallet.currency.current_price) }}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary me-1" onclick="buyCurrency('{{ wallet.currency.symbol }}')">{{ _('Buy') }}</button>
+                                        <button class="btn btn-sm btn-outline-warning" data-symbol="{{ wallet.currency.symbol }}" data-balance="{{ wallet.balance }}" onclick="prepareSellFromButton(this)">{{ _('Sell') }}</button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="buyCurrencyModal" tabindex="-1" aria-labelledby="buyCurrencyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="buyCurrencyModalLabel">{{ _('Buy Currency') }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="buyCurrencyForm">
+                    <div class="mb-3">
+                        <label for="buyCurrencySymbol" class="form-label">{{ _('Currency') }}</label>
+                        <input type="text" class="form-control" id="buyCurrencySymbol" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="buyAmountFC" class="form-label">{{ _('Amount in FC') }}</label>
+                        <div class="input-group">
+                            <input type="number" step="0.01" class="form-control" id="buyAmountFC" placeholder="{{ _('Enter amount in FC') }}" required>
+                            <button class="btn btn-outline-primary" type="button" onclick="setMaxBuyAmount()">{{ _('MAX') }}</button>
+                        </div>
+                        <div class="form-text">
+                            <small>{{ _('Available FC:') }} <span id="availableFC">0</span></small>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="form-label">{{ _('Price') }}</label>
+                                <div class="form-control" id="buyPriceDisplay">-</div>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label">{{ _('Price Impact') }}</label>
+                                <div class="form-control" id="buyPriceImpact">0%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="estimatedReceive" class="form-label">{{ _('You Will Receive') }}</label>
+                        <input type="text" class="form-control" id="estimatedReceive" readonly>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Cancel') }}</button>
+                <button type="button" class="btn btn-primary" onclick="confirmBuy()">{{ _('Buy Currency') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="sellCurrencyModal" tabindex="-1" aria-labelledby="sellCurrencyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sellCurrencyModalLabel">{{ _('Sell Currency') }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="sellCurrencyForm">
+                    <div class="mb-3">
+                        <label for="sellCurrencySymbol" class="form-label">{{ _('Currency') }}</label>
+                        <input type="text" class="form-control" id="sellCurrencySymbol" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sellAmount" class="form-label">{{ _('Amount to Sell') }}</label>
+                        <div class="input-group">
+                            <input type="number" step="0.0001" class="form-control" id="sellAmount" placeholder="{{ _('Enter amount to sell') }}" required>
+                            <button class="btn btn-outline-primary" type="button" onclick="setMaxSellAmount()">{{ _('MAX') }}</button>
+                        </div>
+                        <div class="form-text">
+                            <small>{{ _('Available:') }} <span id="availableCurrency">0</span></small>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="form-label">{{ _('Price') }}</label>
+                                <div class="form-control" id="sellPriceDisplay">-</div>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label">{{ _('Price Impact') }}</label>
+                                <div class="form-control" id="sellPriceImpact">0%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="estimatedReceiveFC" class="form-label">{{ _('You Will Receive') }}</label>
+                        <input type="text" class="form-control" id="estimatedReceiveFC" readonly>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Cancel') }}</button>
+                <button type="button" class="btn btn-warning" onclick="confirmSell()">{{ _('Sell Currency') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let selectedCurrencySymbol = '';
+let allCurrencies = [];
+let currentUserBalance = 0;
+
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('/get_currencies')
+    .then(response => response.json())
+    .then(currencies => {
+        allCurrencies = currencies;
+    })
+    .catch(error => {
+        console.error('Error loading currencies:', error);
+    });
+    
+    fetch('/get_user_balance')
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            currentUserBalance = data.balance;
+        }
+    });
+});
+
+function buyCurrency(symbol) {
+    selectedCurrencySymbol = symbol;
+    document.getElementById('buyCurrencySymbol').value = symbol;
+    document.getElementById('buyAmountFC').value = '';
+    document.getElementById('estimatedReceive').value = '';
+    document.getElementById('availableFC').textContent = currentUserBalance.toFixed(2);
+    document.getElementById('buyPriceDisplay').textContent = '-';
+    document.getElementById('buyPriceImpact').textContent = '0%';
+    
+    const modal = new bootstrap.Modal(document.getElementById('buyCurrencyModal'));
+    modal.show();
+}
+
+function prepareSell(symbol, balance = null) {
+    selectedCurrencySymbol = symbol;
+    document.getElementById('sellCurrencySymbol').value = symbol;
+    document.getElementById('sellAmount').value = '';
+    document.getElementById('estimatedReceiveFC').value = '';
+    document.getElementById('sellPriceDisplay').textContent = '-';
+    document.getElementById('sellPriceImpact').textContent = '0%';
+    
+    if (balance === null) {
+        fetch(`/get_wallet_balance/${symbol}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('availableCurrency').textContent = data.balance.toFixed(4);
+                }
+            });
+    } else {
+        document.getElementById('availableCurrency').textContent = balance.toFixed(4);
+    }
+    
+    const modal = new bootstrap.Modal(document.getElementById('sellCurrencyModal'));
+    modal.show();
+}
+
+function prepareSellFromButton(button) {
+    const symbol = button.getAttribute('data-symbol');
+    const balance = parseFloat(button.getAttribute('data-balance'));
+    prepareSell(symbol, balance);
+}
+
+document.getElementById('buyAmountFC').addEventListener('input', function() {
+    const amountFC = parseFloat(this.value);
+    if (!isNaN(amountFC) && selectedCurrencySymbol && amountFC > 0) {
+        fetch(`/calculate_exchange/FC/${selectedCurrencySymbol}/${amountFC}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('estimatedReceive').value =
+                        data.to_amount.toFixed(4) + ' ' + selectedCurrencySymbol;
+                    document.getElementById('buyPriceDisplay').textContent =
+                        data.price.toFixed(8) + ' FC';
+                    document.getElementById('buyPriceImpact').textContent =
+                        data.price_impact.toFixed(2) + '%';
+                    
+                    if (data.price_impact > 20) {
+                        document.getElementById('buyPriceImpact').classList.add('text-warning');
+                    } else {
+                        document.getElementById('buyPriceImpact').classList.remove('text-warning');
+                    }
+                } else {
+                    document.getElementById('estimatedReceive').value = 'Error: ' + data.message;
+                }
+            })
+            .catch(error => {
+                console.error('Error calculating exchange:', error);
+            });
+    } else {
+        document.getElementById('estimatedReceive').value = '';
+        document.getElementById('buyPriceDisplay').textContent = '-';
+        document.getElementById('buyPriceImpact').textContent = '0%';
+    }
+});
+
+document.getElementById('sellAmount').addEventListener('input', function() {
+    const amount = parseFloat(this.value);
+    if (!isNaN(amount) && selectedCurrencySymbol && amount > 0) {
+        fetch(`/calculate_exchange/${selectedCurrencySymbol}/FC/${amount}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('estimatedReceiveFC').value =
+                        data.to_amount.toFixed(4) + ' FC';
+                    document.getElementById('sellPriceDisplay').textContent =
+                        data.price.toFixed(8) + ' FC';
+                    document.getElementById('sellPriceImpact').textContent =
+                        data.price_impact.toFixed(2) + '%';
+                    
+                    if (data.price_impact > 20) {
+                        document.getElementById('sellPriceImpact').classList.add('text-warning');
+                    } else {
+                        document.getElementById('sellPriceImpact').classList.remove('text-warning');
+                    }
+                } else {
+                    document.getElementById('estimatedReceiveFC').value = 'Error: ' + data.message;
+                }
+            })
+            .catch(error => {
+                console.error('Error calculating exchange:', error);
+            });
+    } else {
+        document.getElementById('estimatedReceiveFC').value = '';
+        document.getElementById('sellPriceDisplay').textContent = '-';
+        document.getElementById('sellPriceImpact').textContent = '0%';
+    }
+});
+
+function confirmBuy() {
+    const amountFC = parseFloat(document.getElementById('buyAmountFC').value);
+    if (isNaN(amountFC) || amountFC <= 0) {
+        alert('Please enter a valid amount.');
+        return;
+    }
+    
+    if (amountFC > currentUserBalance) {
+        alert('Insufficient FC balance.');
+        return;
+    }
+    
+    const priceImpact = parseFloat(document.getElementById('buyPriceImpact').textContent);
+    if (priceImpact > 50) {
+        if (!confirm(`Price impact is high (${priceImpact.toFixed(2)}%). Continue anyway?`)) {
+            return;
+        }
+    }
+    
+    const formData = new FormData();
+    formData.append('from_currency', 'FC');
+    formData.append('to_currency', selectedCurrencySymbol);
+    formData.append('amount', amountFC);
+    
+    fetch('/exchange', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            bootstrap.Modal.getInstance(document.getElementById('buyCurrencyModal')).hide();
+            setTimeout(() => location.reload(), 1000);
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while buying currency.');
+    });
+}
+
+function confirmSell() {
+    const amount = parseFloat(document.getElementById('sellAmount').value);
+    if (isNaN(amount) || amount <= 0) {
+        alert('Please enter a valid amount.');
+        return;
+    }
+    
+    const priceImpact = parseFloat(document.getElementById('sellPriceImpact').textContent);
+    if (priceImpact > 50) {
+        if (!confirm(`Price impact is high (${priceImpact.toFixed(2)}%). Continue anyway?`)) {
+            return;
+        }
+    }
+    
+    const formData = new FormData();
+    formData.append('from_currency', selectedCurrencySymbol);
+    formData.append('to_currency', 'FC');
+    formData.append('amount', amount);
+    
+    fetch('/exchange', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            bootstrap.Modal.getInstance(document.getElementById('sellCurrencyModal')).hide();
+            setTimeout(() => location.reload(), 1000);
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while selling currency.');
+    });
+}
+
+async function setMaxBuyAmount() {
+    if (!selectedCurrencySymbol) return;
+    
+    try {
+        const response = await fetch(`/get_max_buy/${selectedCurrencySymbol}`);
+        const data = await response.json();
+        
+        if (data.success) {
+            const maxByBalance = currentUserBalance;
+            const maxByMarket = data.affordable_max || data.max_amount;
+            
+            const maxAmount = Math.min(maxByBalance, maxByMarket);
+            
+            if (maxAmount <= 0) {
+                document.getElementById('buyAmountFC').value = '';
+                alert('Cannot buy: insufficient funds or liquidity');
+                return;
+            }
+            
+            const safeAmount = maxAmount * 0.9;
+            document.getElementById('buyAmountFC').value = safeAmount.toFixed(2);
+            
+            document.getElementById('buyAmountFC').dispatchEvent(new Event('input'));
+        } else {
+            alert('Error: ' + data.message);
+        }
+    } catch (error) {
+        console.error('Error getting max buy:', error);
+        document.getElementById('buyAmountFC').value = currentUserBalance.toFixed(2);
+        document.getElementById('buyAmountFC').dispatchEvent(new Event('input'));
+    }
+}
+
+async function setMaxSellAmount() {
+    if (!selectedCurrencySymbol) return;
+    
+    try {
+        const balanceResponse = await fetch(`/get_wallet_balance/${selectedCurrencySymbol}`);
+        const balanceData = await balanceResponse.json();
+        
+        if (!balanceData.success || balanceData.balance <= 0) {
+            document.getElementById('sellAmount').value = '';
+            alert('No balance to sell');
+            return;
+        }
+        
+        const marketResponse = await fetch(`/get_max_sell/${selectedCurrencySymbol}`);
+        const marketData = await marketResponse.json();
+        
+        if (marketData.success) {
+            const maxByBalance = balanceData.balance;
+            const maxByMarket = marketData.max_amount;
+            
+            const maxAmount = Math.min(maxByBalance, maxByMarket);
+            
+            if (maxAmount <= 0) {
+                document.getElementById('sellAmount').value = '';
+                alert('Cannot sell: insufficient liquidity');
+                return;
+            }
+            
+            const safeAmount = maxAmount * 0.9;
+            document.getElementById('sellAmount').value = safeAmount.toFixed(4);
+            
+            document.getElementById('sellAmount').dispatchEvent(new Event('input'));
+        } else {
+            document.getElementById('sellAmount').value = balanceData.balance.toFixed(4);
+            document.getElementById('sellAmount').dispatchEvent(new Event('input'));
+        }
+    } catch (error) {
+        console.error('Error getting max sell:', error);
+        const availableText = document.getElementById('availableCurrency').textContent;
+        const availableBalance = parseFloat(availableText);
+        if (!isNaN(availableBalance) && availableBalance > 0) {
+            document.getElementById('sellAmount').value = availableBalance.toFixed(4);
+            document.getElementById('sellAmount').dispatchEvent(new Event('input'));
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.card');
+    cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, 150 * index);
+    });
+});
+</script>
+{% endblock %}
