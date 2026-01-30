@@ -1,0 +1,2 @@
+# FreshCoin
+FreshCoin — Виртуальный Банк
