@@ -15,7 +15,7 @@ SYSTEM_USERNAME = "FreshGame"
 SYSTEM_DISPLAY_NAME = ""
 SYSTEM_EMAIL = "freshlend.studio@gmail.com"
 SYSTEM_PASSWORD = "000213"
-SYSTEM_BALANCE = 0.0
+SYSTEM_BALANCE = 1000.0
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key-here'
